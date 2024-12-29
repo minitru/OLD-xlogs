@@ -1,0 +1,45 @@
+#!/bin/sh
+
+# SCAN A HOST AND SHOW OPEN PORTS AND SCREEN CAP OF WEBSITES
+# ARGUMENTS
+# IPADDRESS, IDENTIFIER (IMAGES?)
+
+IP="$1"
+IMG="/home/sean/xlogs/snaps/"
+EMPTY="No ports appear to be open"
+
+/usr/bin/nmap -sT $IP | while read line
+do
+	TCP=`echo $line | grep tcp`		# PRINT OUT tcp/ LINES
+	if ! test "$TCP"
+	then
+		continue;
+	fi
+
+	set $line
+
+	OPEN=`echo $2 | grep "open"`
+	if test "$OPEN"
+	then
+		# echo "OPEN"
+		HTTP=`echo $3 | grep http`
+		if test "$HTTP"		# IT'S A WEB PAGE
+		then
+			PORT=`echo $1 | sed "s/\//\ /g"`
+			set $PORT
+			PORT=$1
+			PROXY=`echo $HTTP | grep proxy`
+			if test "$PROXY"
+			then
+				HTTP="http"
+			fi
+			URL="$HTTP://$IP:$PORT"
+			# echo "GRABBING SNAPSHOT OF WEBPAGE: $URL"
+			/home/sean/phantom/bin/phantomjs --ignore-ssl-errors=yes snap.js $URL $IP:$PORT
+			echo "<A HREF=# onmouseover=\"loadImg('$IP:$PORT')\">[tcp/$PORT $HTTP open]</A>"
+		# 	echo "[<A HREF=snaps/$IP:$PORT.png>tcp/$PORT $HTTP open</A>] ";
+		else echo $line
+		fi
+	else echo $line
+	fi
+done

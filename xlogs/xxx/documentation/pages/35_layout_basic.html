@@ -1,0 +1,38 @@
+<link href="../css/documentation.css" rel="stylesheet" type="text/css" />
+<p><span class="value"><font size="1">01</font></span> <strong>The Default parameters of the Plugin</strong></p>
+<ul>
+  <li><span class="value">width/height </span>- Sets the Size of the Plugin. Padding, shadows etc will added from  this size.</li>
+  <li><span class="value">slideAmount</span> - How many slides visible at a time</li>
+  <li><span class="value">slideSpacing</span> - Padding between the slides</li>
+  <li><span class="value">touchenabled</span> - Enable the touch swipe detection on/off</li>
+  <li><span class="value">mouseWheel</span> - Enable mousewheel detection on/off</li>
+  <li><span class="value">slideshow</span> - Timer interval of automatic rotation in ms (0 = off, 2000 = 2 sec.)</li>
+  <li><span class="value">callback</span> - Enter your JS code here if needed (for example cufon.refresh())</li>
+</ul>
+<pre class="xmlexample">&lt;script type=&quot;text/javascript&quot;&gt;
+&nbsp;&nbsp;&nbsp;$(document).ready(function() {<br />					$.noConflict();					 									<br />					<br />			jQuery('#<strong>services-example-1</strong>').services(<br />				{										<br />							<span class="value">width</span>:920,<br />							<span class="value">height</span>:295,							<br />							<span class="value">slideAmount</span>:5,<br />							<span class="value">slideSpacing</span>:30,							<br />							<span class="value">touchenabled</span>:&quot;on&quot;,<br />							<span class="value">mouseWheel</span>:&quot;on&quot;,
+							<span class="value">slideshow</span>:3000,
+							<span class="value">callBack</span>:function() {}<br />				});<br />						&lt;/script&gt;</pre>
+<br>
+<p><span class="value"><font size="1">02</font></span> <strong>The Services Declaration</strong></p>
+<p>A <b>&lt;div&gt;</b> that is called via the above jQuery call declares the  the service. This div wraps the unsorted list items (banner items). The theme added here in class defines the optics.</p>
+<p>An Example:</p>
+<p class="xmlexample">&lt;<strong>div</strong> id=&quot;services-example-1&quot; class=&quot;<strong>theme1</strong>&quot;&gt;<br />
+&nbsp;&nbsp;&lt;<strong>ul</strong>&gt;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;li ...&gt;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/li&gt;<br />
+&nbsp;&nbsp;&lt;/<strong>ul</strong>&gt;<br />
+&lt;/<strong>div</strong>&gt;</p><br>
+<p><span class="value"><font size="1">03</font></span> <strong>Slider items</strong></p>
+<p><span class="value">&lt;li&gt; - </span>Every <b>list item</b> represents a new slider item. </p>
+<p>It is divided into two parts: A normal/preview view and the detailed view which opens when the &quot;readmore&quot; button is been clicked.</p>
+<p>You can basically put in the HTML of your choice in both containers. Remember to use the preview/normal stuff directly in the <strong>&lt;li&gt;</strong>, the detailed view elements belong into the DIV with the class <strong>page-more</strong>.</p>
+<ul>
+</ul>
+<pre class="xmlexample"><strong>&lt;!--	###############		-	SLIDE 1	-	###############	 --&gt;</strong><br />	<strong>&lt;<span class="value">li</span>&gt;</strong><br />		&lt;img class=&quot;thumb&quot; <span class="value">src=&quot;images/services/service1.jpg&quot; data-bw=&quot;images/services/service1_bw.jpg&quot;</span>&gt;	<br />		&lt;div style=&quot;margin-top:16px&quot;&gt;&lt;/div&gt;<br />		<span class="value">&lt;h2&gt;Diverse Layouts&lt;/h2&gt;</span><br />		<span class="value">&lt;p&gt;Lorem ipsum dolor sit amet...&lt;/p&gt;	</span>							<br />		<span class="value">&lt;a class=&quot;buttonlight morebutton&quot; href=&quot;#&quot;&gt;Read More&lt;/a&gt;</span><br />								<br />		<strong>&lt;!-- <br />		**************************************************************************
+ 		-	HERE YOU CAN DEFINE THE EXTRA PAGE WHICH SHOULD BE SHOWN IN CASE THE &quot;BUTTON&quot;...<br />		***************************************************************************
+		--&gt;</strong><br />		<strong>&lt;div <span class="value">class=&quot;page-more&quot;</span>&gt;</strong><br />			&lt;img <span class="value">class=&quot;big-image&quot; </span>width=&quot;350&quot; height=&quot;270&quot; src=&quot;images/services/service1.jpg&quot;&gt;<br />			&lt;div <span class="value">class=&quot;details&quot;</span>&gt;<br />				&lt;h2&gt;Diverse Layouts&lt;/h2&gt;<br />				&lt;p&gt;Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod....&lt;/p&gt;<br />				&lt;p&gt;At vero eou et accusam et justo duo dolores et ea rebum.&lt;br&gt;Stet clita kasd ...&lt;/p&gt;<br />				<span class="value">&lt;a class=&quot;buttonlight&quot; href=&quot;#&quot;&gt;Visit Website&lt;/a&gt;</span><br />			&lt;/div&gt;<br />			&lt;div <span class="value">class=&quot;details&quot;</span>&gt;<br />				&lt;h2&gt;Step Towards Success&lt;/h2&gt;<br />				&lt;ul class=&quot;check&quot;&gt;<br />					&lt;li&gt;List Item Number One&lt;/li&gt;<br />					&lt;li&gt;List Item Number Two&lt;/li&gt;<br />					&lt;li&gt;List Item Number Three&lt;/li&gt;<br />					&lt;li&gt;List Item Number Four&lt;/li&gt;						<br />				&lt;/ul&gt;<br />				&lt;img src=&quot;images/certified.png&quot;&gt;<br />			&lt;/div&gt;<br />			&lt;div  <span class="value">class=&quot;closer&quot;</span>&gt;&lt;/div&gt;<br />		<strong>&lt;/div&gt;</strong><br />	<strong>&lt;/<span class="value">li</span>&gt;</strong><br>
+</pre>
+<p><img src="../images/normal.jpg" width="1052" height="408" alt="normal" /></p>
+<p><img src="../images/detail.jpg" width="1011" height="377" alt="detail" /></p>

@@ -1,0 +1,69 @@
+<?php
+/* HANDLE A NEW USER - SHOULD HAVE AN AUTH CODE */
+
+if ($_POST["authcode"]) {	/* IT'S A NEW USER */
+	$passwd = create_hash($passwd);
+	$email = $_POST['email'];
+	/* print "it's a new user"; */
+	$query = "SELECT * FROM users WHERE email = \"$email\"";
+	$result = mysql_query($query) or die('Query failed: ' . mysql_error());
+
+	if (mysql_num_rows($result) != 0) {
+		/* USER ALREADY EXISTS */
+		logger("$email USER ADD FAILED");
+		# file_put_contents("logfile", "$email USER ADD FAIL\n", FILE_APPEND);
+		print "ERROR: Email already exists, try again";
+		exit;
+	}
+	/* print "add new user $login, $pw, $email"; */
+	$email = $_POST['email'];
+	$query = "INSERT INTO users (email, fname, lname, password, lang) 
+	VALUES ('$email', '$fname', '$lname', '$passwd','$lang')";
+	$result = mysql_query($query) or die('Query failed: ' . mysql_error());
+	logger("$email USER ADD OK");
+	# file_put_contents("logfile", "$email USER ADD OK\n", FILE_APPEND);
+/*
+	$query = "SELECT * FROM users WHERE login = \"$login\"";
+	$result = mysql_query($query) or die('Query failed: ' . mysql_error());
+	$row = mysql_fetch_assoc($result);
+*/
+
+	session_start();
+
+// Unset all of the session variables.
+	$_SESSION = array();
+
+// If it's desired to kill the session, also delete the session cookie.
+// Note: This will destroy the session, and not just the session data!
+	if (ini_get("session.use_cookies")) {
+    		$params = session_get_cookie_params();
+    		setcookie(session_name(), '', time() - 42000,
+        		$params["path"], $params["domain"],
+        		$params["secure"], $params["httponly"]
+    		);
+	}
+
+	$id = $row['id'];
+	if ($row['lang']) $lang = $row['lang'];
+
+	$_SESSION['id']=$id;
+	$_SESSION['email']=$email;
+	$_SESSION['lang']=$lang;
+	$_SESSION['fname']=$fname;
+
+	/* SEND THE WELCOME MESSAGE */
+        $mailfile='include/email.' . $lang;
+        # include $mailfile;
+        $to = $email;
+        $subject = "Welcome to xlogs";
+        // $subject = $em_welcome;
+        // $body=$em_welcome_txt; 
+	$body = "WELCOME TO XLOGS";
+
+	$headers = "From: xlogs  <sean@xlo.gs>\r\n";
+        $headers .= "Reply-To: sean@xlo.gs\r\n";
+        mail($to, $subject, $body, $headers);
+	print "JUMP: view.php";
+	// header("Location: view.php");
+}
+?>

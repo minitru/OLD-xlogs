@@ -1,0 +1,93 @@
+<?php
+
+include 'pass.php';
+include 'include/db.php';
+ 
+// ALL OF OUR STARTUP FORMS SHOULD REALLY GO TO THE SMAE
+// PLACE... BUT IM LAZY AND CONFUSED
+
+//Retrieve form data.
+//GET - user submitted data using AJAX
+//POST - in case user does not support javascript, we'll use POST instead
+$email = ($_GET['email']) ?$_GET['email'] : $_POST['email'];
+$fname = ($_GET['fname']) ? $_GET['fname'] : $_POST['fname'];
+$lname = ($_GET['lname']) ? $_GET['lname'] : $_POST['lname'];
+$passwd = ($_GET['passwd']) ? $_GET['passwd'] : $_POST['passwd'];
+$authcode = ($_GET['authcode']) ?$_GET['authcode'] : $_POST['authcode'];
+ 
+if ($fname == undefined) {
+	if ($passwd) {	// LOGIN REQUEST
+        	$query = "SELECT * FROM users WHERE email = \"$email\"";
+        	$result = mysql_query($query) or die('Query failed: ' . mysql_error());
+        	$row = mysql_fetch_assoc($result);
+        	$hash = $row['password'];		# THE HASHED PASSWD
+        	# print "It's a login [$id]"; 
+	
+        	if ((mysql_num_rows($result) != 0) && (validate_password($passwd, $hash))) {
+ $id = $row['id'];
+			dologin($row);
+        	}
+		else {
+			logger("$email LOGIN FAILED");
+			# file_put_contents("logfile", "$date $email INVALID LOGIN\n", FILE_APPEND);
+			echo "ERROR: invalid login - try again...";
+		}
+	exit;
+	}
+
+// DO THE DATABASE THANG...
+} 
+else if (!$fname) {
+	$query = "SELECT * FROM users WHERE email = \"$email\"";
+	$result = mysql_query($query) or die('Query failed: ' . mysql_error());
+
+        if (mysql_num_rows($result) != 0) {
+       	/* USER ALREADY EXISTS */
+		logger("$email USER ALREADY EXISTS");
+		# file_put_contents("logfile", "$date $email ALREADY EXISTS\n", FILE_APPEND);
+		echo "ERROR: User already exists, try again";
+		exit;
+        }
+
+    # file_put_contents("logfile", "$date $email SEND AUTHCODE\n", FILE_APPEND);
+    logger("$email SEND AUTHCODE");
+    //recipient - change this to your name and email
+    $to = $email;
+    $from = "xlogs <sean@xlo.gs>";
+
+    $authcode = rand(100000,999999);
+
+    # WRITE THE EMAIL INTO A FILE NAMES WITH THE AUTHCODE
+    # GET THIS OUT OF THE ROOT DIR
+    `echo "$email" > /home/sean/xlogs/$authcode`;
+     
+    //subject and the html message
+    //$subject = 'Complete your xlogs registration';
+    $subject="xlogs: Please confirm your email address";
+    $url="http://xlo.gs/signup.php?email=" . $email . "&auth=" . $authcode;
+    $message = "Welcome " .  $email .  ", to finish registering for xlogs just click here: <A HREF=" . $url . ">" . $url . "</A>";
+ 
+    //send the mail
+    $result = sendmail($to, $subject, $message, $from);
+     
+    if ($result) echo '<h2 style="color:grey; font-weight:200;"><BR><BR><CENTER>We have sent you a confirmation email<BR><BR>Please check your inbox</H2><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR>';
+    else echo 'Sorry, unexpected error. Please try again later';
+}
+else {
+	//print "FNAME: $fname";
+	include "adduser.php";
+}
+ 
+ 
+//Simple mail function with HTML header
+function sendmail($to, $subject, $message, $from) {
+    $headers = "MIME-Version: 1.0" . "\r\n";
+    $headers .= "Content-type:text/html;charset=iso-8859-1" . "\r\n";
+    $headers .= 'From: ' . $from . "\r\n";
+     
+    $result = mail($to,$subject,$message,$headers);
+     
+    if ($result) return 1;
+    else return 0;
+}
+?>

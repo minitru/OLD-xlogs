@@ -1,0 +1,14 @@
+#pic {
+	display: inline;
+}
+
+.hastooltip + div {
+    display: none;
+    color: orange;
+    position: absolute;
+    /* margin-left: -100px; margin-top: -50px;
+    Adjust and un-comment these margins to move the tooltip */
+    border: 1px solid black;
+    background-color: white;
+}
+.hastooltip:hover + div, .hastooltip + div:hover { display: block; }

@@ -1,0 +1,612 @@
+<?php
+require_once 'include/db.php';
+require_once 'include/checksession.php';
+/*
+if ($_REQUEST["accesskey"]) $pub=$_REQUEST["accesskey"];
+if ($_REQUEST["secretkey"]) $pri=$_REQUEST["secretkey"];
+*/
+$key1=$_SESSION['key1'];
+$sec1=$_SESSION['sec1'];
+
+$key1=str_replace(" ", "+", $key1);
+$sec1=str_replace(" ", "+", $sec1);
+$run="https://xlo.gs/dyn.php?key1=" . $key1 . "&"  . "sec1=" . $sec1;
+// print "PUB: $pub, PRI=$pri RUN=$run<BR>\n";
+?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+<title>xlogs | logfiles for Amazon AWS EC2</title>
+<link rel="shortcut icon" href="xlogs.png" />
+<link rel="stylesheet" media="screen" href="xlogs.css" />
+
+<link href='https://fonts.googleapis.com/css?family=Ubuntu+Mono' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:200' rel='stylesheet' type='text/css'>
+
+<style type="text/css" title="currentStyle">
+	@import "dt/media/css/demo_page.css";
+       	@import "dt/media/css/demo_table.css";
+</style>
+
+<!-- Demo Scripts -->
+<script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
+<script type="text/javascript" language="javascript" src="dt/media/js/jquery.dataTables.js"></script>
+<script type="text/javascript" charset="utf-8" src="dt/extras/TableTools/media/js/ZeroClipboard.js"></script>
+<script type="text/javascript" charset="utf-8" src="dt/extras/TableTools/media/js/TableTools.js"></script>
+<script type="text/javascript" src="dygraph-combined.js"></script>
+<script type="text/javascript">
+	var $run = "<?php  echo $run; ?>";
+	if ($run == "") $run = "https://xlo.gs/dyn.php";
+</script>
+
+
+<link rel="stylesheet" type="text/css" href="xxx/source/css/style.css" media="screen" />
+
+<!-- ANIMATE AND EASING LIBRARIES -->
+<script type="text/javascript" src="services-plugin/js/jquery.easing.1.3.js"></script>
+<script type="text/javascript" src="services-plugin/js/jquery.cssAnimate.mini.js"></script>
+
+<!-- TOUCH AND MOUSE WHEEL SETTINGS -->
+<script type="text/javascript" src="services-plugin/js/jquery.touchwipe.min.js"></script>
+<script type="text/javascript" src="services-plugin/js/jquery.mousewheel.min.js"></script>
+
+<!-- jQuery SERVICES Slider -->
+<script type="text/javascript" src="services-plugin/js/jquery.themepunch.services.js"></script>
+<link rel="stylesheet" type="text/css" href="services-plugin/css/settings.css" media="screen" />
+
+<script type="text/javascript">
+$(document).ready(function(){
+    //if submit button is clicked
+    $(".savekeys").submit(function() { return false; });	// DISABLE THE SUBMIT KEY
+    $(".savekeys, .notify").submit(function() {			// ENABLE IT FOR BOTH CLASSES
+	// alert("WE MADE IT HERE ");
+        //Get the data from all the fields
+        var key1 = $('input[name=key1]');
+        var sec1 = $('input[name=sec1]');
+	var notify;
+        $("input[name='notify']:checked").each(function(i) {
+                // alert("NOTIFY: " . notify);
+                if (notify) notify = notify + "," + ($(this).val());
+                else notify = ($(this).val());
+        });
+
+        // THE SERIALIZATION SHOULD BE AUTOMATIC
+	if (notify) var data = 'notify=' + notify + '&id=' + <?php echo $id ?>;
+	else var data = 'key1=' + key1.val() + '&sec1=' + sec1.val() + '&id=' + <?php echo $id ?>;
+
+        // THE SERIALIZATION SHOULD BE AUTOMATIC
+        // var data = 'key1=' + key1.val() + '&sec1=' + sec1.val() + '&id=' + <?php echo $id ?>;
+
+        //show the loading sign
+        $('.loading').show();
+        //start the ajax
+        $.ajax({
+            //this is the php file that processes the data and send mail
+            url: "savekeys.php",
+            type: "POST",
+            //pass the data        
+            data: data,
+            //Do not cache the page
+            cache: false,
+            //success
+            success: function (msg) {
+                if (msg.indexOf("JUMP") != -1) {
+                        msg = msg.substr(5);    // SKIP ERROR
+                        window.location.href=msg;
+                }
+                else if (msg.indexOf("ERROR") != -1) {
+			// alert("CALLING ERROR");
+                        msg = msg.substr(6);    // SKIP ERROR
+                        document.getElementById('hdr').innerHTML = msg;
+                }
+                else {
+                    //hide the form
+                    $('#c2').fadeOut('fast');
+                    //show the success message
+                    $('#c2').html(msg);
+                    $('#c2').fadeIn('slow');
+                }
+            }
+        });
+        //cancel the submit button default behaviours
+        return false;
+    });
+
+    $('#example').dataTable( {
+        "sDom": '<"top"i>lrt<"bottom">f<"#filter"T><"clear">',
+        "sScrollY": "250px",
+        "bPaginate": false,
+        "bProcessing": true,
+        "oTableTools": {
+            "sSwfPath": "/dt/tt/media/swf/copy_csv_xls_pdf.swf",
+        },
+        "aaSorting": [[ 0, "desc" ]],
+                "aoColumns": [
+                        null,
+                        null,
+                        null,
+                        null,
+                        null,
+                        null,
+                        null,
+                        null
+                ],
+        "sAjaxSource": $run
+    } );
+
+        jQuery('#services-example-1').services(
+        {
+
+                width:920,
+                height:170,
+                slideAmount:3,
+                slideSpacing:13,
+                carousel:"on",
+                touchenabled:"off",
+                mouseWheel:"on",
+                slideshow:4000,
+                transition:0,
+                callBack:function() {}
+        });
+} );
+
+</script>
+</head>
+    <body>
+<A HREF="https://xlo.gs"><div id="logo"><IMG SRC="xlogs.png" VALIGN=middle>xlogs</div></A>
+
+<ul id="list-nav">
+<li><a href="index.php">Home</a></li>
+<li><a href="about.php">About</a></li>
+<li><a href="contact.php">Contact</a></li>
+</ul>
+
+<div id="demo-header">
+<div id="login-link">
+	<?php include "include/loginbutton.php";?>
+</div>
+</div><!-- /demoheader -->
+
+        <br class="clear" /><br /><br /><br />
+        <div id="content">
+            <h1 class="pagehead"><div class="xl">xlogs:</div> Welcome 
+<?php echo "$fname... "; 
+if ($key1) {
+	include "/var/www/xlogs/chart.php";
+	include "/var/www/xlogs/spend.php";
+	//echo "Here are your transactions from Amazon EC2";
+}
+else {
+	echo "Please enter your AWS access keys in the box at the bottom of the screen";
+}
+?></h1>
+            <div class="description">
+        <div id="dynamic" style="font-weight: regular; font-family: 'Ubuntu Mono', sans-serif;">
+<table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
+        <thead>
+                <th width="100%" colspan=8>
+                        <div  style="font-family: 'Yanone Kaffeesatz', sans-serif;"> <h2>Recent transactions: <B>Amazon AWS EC2</B></H2> </div>
+                </th>
+                <tr>
+                        <th width="22%">Date</th>
+                        <th width="2%">From</th>
+                        <th width="7%">Instance</th>
+                        <th width="7%">Action</th>
+                        <th width="5%">Type</th>
+                        <th width="6%">Runtime</th>
+                        <th width="4%">Cost</th>
+                        <th width="50%">Comments</th>
+                </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+</table>
+            </div> <!-- /dynamic -->
+           </div><!-- /desc -->
+
+
+
+			<div class="example-wrapper">
+					<div id="services-example-1" class="theme1">
+						<ul>
+
+
+						<!--	###############		-	SLIDE 1	-	###############	 -->
+							<li>
+								<img class="thumb" src="images/services/service1.jpg" data-bw="images/services/service1_bw.jpg">
+								<div style="margin-top:16px"></div>
+								<h2>Slide With Large Image1</h2>
+<form action="https://xlo.gs/savekeys.php" method="POST" class="savekeys">
+<div class=field><label>Access Key:</label> <input type="text" name="key1" /></div>
+<div class=field><label>Secret Key:</label> <input type="password" name="sec1" />
+<input id="submit" type="submit" name="submit" class="savekeys" value="Go"></div>
+								<a class="buttonlight morebutton" href="http://www.google.de">View More</a>
+
+								<!--
+								***********************************************************************************************************
+									-	HERE YOU CAN DEFINE THE EXTRA PAGE WHICH SHOULD BE SHOWN IN CASE THE "BUTTON" HAS BEED PRESSED -
+								***********************************************************************************************************
+								-->
+								<div class="page-more">
+									<img class="big-image" width="498" height="280" src="images/services/large1.jpg">
+									<div class="details">
+										<h2>Our Strategy</h2>
+										<p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labora et dolore magna.</p>
+										<p>At vero eou et accusam et justo duo dolores et ea rebum.<br>Stet clita kasd gubergen.</p>
+										<a class="buttonlight" href="#">Visit Website</a>
+									</div>
+									<div class="details">
+										<h2>Step Towards Success</h2>
+										<ul class="check">
+											<li>List Item Number One</li>
+											<li>List Item Number Two</li>
+											<li>List Item Number Three</li>
+											<li>List Item Number Four</li>
+										</ul>
+										<img src="images/certified.png">
+									</div>
+									<div  class="closer"></div>
+								</div>
+							</li>
+
+
+							<!--	###############		-	SLIDE 2	-	###############	 -->
+							<li>
+								<img class="thumb" src="images/services/service2.jpg" data-bw="images/services/service2_bw.jpg">
+								<div style="margin-top:16px"></div>
+								<h2>Youtube Video2</h2>
+								<p>Lorem ipsum dolor sit amet, conseteetur sadipscing elitr,<br> sed diam monumy eirmod...</p>
+								<a class="buttonlight morebutton" href="#">View More</a>
+
+								<!--
+								***********************************************************************************************************
+									-	HERE YOU CAN DEFINE THE EXTRA PAGE WHICH SHOULD BE SHOWN IN CASE THE "BUTTON" HAS BEED PRESSED -
+								***********************************************************************************************************
+								-->
+								<div class="page-more">
+									<iframe class="video_clip" src="http://www.youtube.com/embed/kjX-8kQmakk?hd=1&amp;wmode=opaque&amp;autohide=1&amp;showinfo=0" height="280" width="498" frameborder="0" webkitAllowFullScreen allowFullScreen></iframe>
+									<div class="details">
+										<h2>Our Strategy</h2>
+										<p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labora et dolore magna.</p>
+										<p>At vero eou et accusam et justo duo dolores et ea rebum.<br>Stet clita kasd gubergen.</p>
+										<a class="buttonlight" href="#">Visit Website</a>
+									</div>
+									<div class="details">
+										<h2>Step Towards Success</h2>
+										<ul class="check">
+											<li>List Item Number One</li>
+											<li>List Item Number Two</li>
+											<li>List Item Number Three</li>
+											<li>List Item Number Four</li>
+										</ul>
+										<img src="images/certified.png">
+									</div>
+									<div  class="closer"></div>
+								</div>
+							</li>
+
+
+							<!--	###############		-	SLIDE 3	-	###############	 -->
+							<li>
+								<img class="thumb" src="images/services/service3.jpg" data-bw="images/services/service3_bw.jpg">
+								<div style="margin-top:16px"></div>
+								<h2>Vimeo Video3</h2>
+								<p>Lorem ipsum dolor sit amet, conseteetur sadipscing elitr,<br> sed diam monumy eirmod...</p>
+								<a class="buttonlight morebutton" href="#">View More</a>
+
+								<!--
+								***********************************************************************************************************
+									-	HERE YOU CAN DEFINE THE EXTRA PAGE WHICH SHOULD BE SHOWN IN CASE THE "BUTTON" HAS BEED PRESSED -
+								***********************************************************************************************************
+								-->
+								<div class="page-more">
+
+									<div class="details">
+										<h2>Our Strategy</h2>
+										<p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labora et dolore magna.</p>
+										<p>At vero eou et accusam et justo duo dolores et ea rebum.<br>Stet clita kasd gubergen.</p>
+										<a class="buttonlight" href="#">Visit Website</a>
+									</div>
+                                    <iframe class="video_clip" src="http://player.vimeo.com/video/24456787?title=0&amp;byline=0&amp;portrait=0" width="498" height="280" frameborder="0" webkitAllowFullScreen allowFullScreen></iframe>
+                                    <div class="details">
+										<h2>Step Towards Success</h2>
+										<ul class="check">
+											<li>List Item Number One</li>
+											<li>List Item Number Two</li>
+											<li>List Item Number Three</li>
+											<li>List Item Number Four</li>
+										</ul>
+										<img src="images/certified.png">
+									</div>
+									<div  class="closer"></div>
+								</div>
+							</li>
+
+
+
+							<!--	###############		-	SLIDE 4	-	###############	 -->
+							<li>
+								<img class="thumb" src="images/services/service4.jpg" data-bw="images/services/service4_bw.jpg">
+								<div style="margin-top:16px"></div>
+								<h2>Design Your Layout4</h2>
+								<p>Lorem ipsum dolor sit amet, conseteetur sadipscing elitr,<br> sed diam monumy eirmod...</p>
+								<a class="buttonlight morebutton" href="#">View More</a>
+
+								<!--
+								***********************************************************************************************************
+									-	HERE YOU CAN DEFINE THE EXTRA PAGE WHICH SHOULD BE SHOWN IN CASE THE "BUTTON" HAS BEED PRESSED -
+								***********************************************************************************************************
+								-->
+								<div class="page-more">
+									<img class="big-image" width="498" height="280" src="images/services/large2.jpg">
+									<div class="details_double">
+										<h2>Just An Image & Text</h2>
+										<p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labora et dolore magna.</p>
+                                        <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labora et dolore magna.</p>
+										<p>At vero eou et accusam et justo duo dolores et ea rebum.<br>Stet clita kasd gubergen, no sea takimata sanctus est Lorem ipsum dolor.</p>
+										<a class="buttonlight" href="#">Visit Website</a>
+									</div>
+									<div  class="closer"></div>
+								</div>
+							</li>
+
+
+
+							<!--	###############		-	SLIDE 5	-	###############	 -->
+							<li>
+								<img class="thumb" src="images/services/service5.jpg" data-bw="images/services/service5_bw.jpg">
+								<div style="margin-top:16px"></div>
+								<h2>No Image Just Text5</h2>
+								<p>Lorem ipsum dolor sit amet, conseteetur sadipscing elitr,<br> sed diam monumy eirmod...</p>
+								<a class="buttonlight morebutton" href="#">View More</a>
+
+								<!--
+								***********************************************************************************************************
+									-	HERE YOU CAN DEFINE THE EXTRA PAGE WHICH SHOULD BE SHOWN IN CASE THE "BUTTON" HAS BEED PRESSED -
+								***********************************************************************************************************
+								-->
+								<div class="page-more">
+									<div class="details">
+										<h2>Diverse Layouts</h2>
+										<p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labora et dolore magna.</p>
+										<p>At vero eou et accusam et justo duo dolores et ea rebum.<br>Stet clita kasd gubergen, no sea takimata sanctus est Lorem ipsum dolor.</p>
+									</div>
+									<div class="details">
+										<h2>Step Towards Success</h2>
+										<ul class="check">
+											<li>List Item Number One</li>
+											<li>List Item Number Two</li>
+											<li>List Item Number Three</li>
+											<li>List Item Number Four</li>
+										</ul>
+										<img src="images/certified.png">
+									</div>
+                                    <div class="details_double">
+										<h2>Wide Text Block</h2>
+										<p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labora et dolore magna.</p>
+                                        <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labora et dolore magna.</p>
+										<p>At vero eou et accusam et justo duo dolores et ea rebum.<br>Stet clita kasd gubergen, no sea takimata sanctus est Lorem ipsum dolor.</p>
+										<a class="buttonlight" href="#">Visit Website</a>
+									</div>
+                                    <div class="details">
+										<h2>Short Text Block</h2>
+										<p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labora et dolore magna.</p>
+										<p>At vero eou et accusam et justo duo dolores et ea rebum.<br>Stet clita kasd gubergen, no sea takimata sanctus est Lorem ipsum dolor.</p>
+									</div>
+									<div  class="closer"></div>
+								</div>
+							</li>
+
+
+
+                            <!--	###############		-	SLIDE 6	-	###############	 -->
+							<li>
+								<img class="thumb" src="images/services/service1.jpg" data-bw="images/services/service1_bw.jpg">
+								<div style="margin-top:16px"></div>
+								<h2>Slide With Large Image6</h2>
+								<p>Lorem ipsum dolor sit amet, conseteetur sadipscing elitr,<br> sed diam monumy eirmod...</p>
+								<a class="buttonlight morebutton" href="#">View More</a>
+
+								<!--
+								***********************************************************************************************************
+									-	HERE YOU CAN DEFINE THE EXTRA PAGE WHICH SHOULD BE SHOWN IN CASE THE "BUTTON" HAS BEED PRESSED -
+								***********************************************************************************************************
+								-->
+								<div class="page-more">
+									<img class="big-image" width="498" height="280" src="images/services/large1.jpg">
+									<div class="details">
+										<h2>Our Strategy</h2>
+										<p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labora et dolore magna.</p>
+										<p>At vero eou et accusam et justo duo dolores et ea rebum.<br>Stet clita kasd gubergen.</p>
+										<a class="buttonlight" href="#">Visit Website</a>
+									</div>
+									<div class="details">
+										<h2>Step Towards Success</h2>
+										<ul class="check">
+											<li>List Item Number One</li>
+											<li>List Item Number Two</li>
+											<li>List Item Number Three</li>
+											<li>List Item Number Four</li>
+										</ul>
+										<img src="images/certified.png">
+									</div>
+									<div  class="closer"></div>
+								</div>
+							</li>
+
+
+							<!--	###############		-	SLIDE 7	-	###############	 -->
+							<li>
+								<img class="thumb" src="images/services/service2.jpg" data-bw="images/services/service2_bw.jpg">
+								<div style="margin-top:16px"></div>
+								<h2>Youtube Video7</h2>
+								<p>Lorem ipsum dolor sit amet, conseteetur sadipscing elitr,<br> sed diam monumy eirmod...</p>
+								<a class="buttonlight morebutton" href="#">View More</a>
+
+								<!--
+								***********************************************************************************************************
+									-	HERE YOU CAN DEFINE THE EXTRA PAGE WHICH SHOULD BE SHOWN IN CASE THE "BUTTON" HAS BEED PRESSED -
+								***********************************************************************************************************
+								-->
+								<div class="page-more">
+									<iframe class="video_clip" src="http://www.youtube.com/embed/kjX-8kQmakk?hd=1&amp;wmode=opaque&amp;autohide=1&amp;showinfo=0" height="280" width="498" frameborder="0" webkitAllowFullScreen allowFullScreen></iframe>
+									<div class="details">
+										<h2>Our Strategy</h2>
+										<p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labora et dolore magna.</p>
+										<p>At vero eou et accusam et justo duo dolores et ea rebum.<br>Stet clita kasd gubergen.</p>
+										<a class="buttonlight" href="#">Visit Website</a>
+									</div>
+									<div class="details">
+										<h2>Step Towards Success</h2>
+										<ul class="check">
+											<li>List Item Number One</li>
+											<li>List Item Number Two</li>
+											<li>List Item Number Three</li>
+											<li>List Item Number Four</li>
+										</ul>
+										<img src="images/certified.png">
+									</div>
+									<div  class="closer"></div>
+								</div>
+							</li>
+
+
+							<!--	###############		-	SLIDE 8 -	###############	 -->
+							<li>
+								<img class="thumb" src="images/services/service3.jpg" data-bw="images/services/service3_bw.jpg">
+								<div style="margin-top:16px"></div>
+								<h2>Vimeo Video8</h2>
+								<p>Lorem ipsum dolor sit amet, conseteetur sadipscing elitr,<br> sed diam monumy eirmod...</p>
+								<a class="buttonlight morebutton" href="#">View More</a>
+
+								<!--
+								***********************************************************************************************************
+									-	HERE YOU CAN DEFINE THE EXTRA PAGE WHICH SHOULD BE SHOWN IN CASE THE "BUTTON" HAS BEED PRESSED -
+								***********************************************************************************************************
+								-->
+								<div class="page-more">
+
+									<div class="details">
+										<h2>Our Strategy</h2>
+										<p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labora et dolore magna.</p>
+										<p>At vero eou et accusam et justo duo dolores et ea rebum.<br>Stet clita kasd gubergen.</p>
+										<a class="buttonlight" href="#">Visit Website</a>
+									</div>
+                                    <iframe class="video_clip" src="http://player.vimeo.com/video/24456787?title=0&amp;byline=0&amp;portrait=0" width="498" height="280" frameborder="0" webkitAllowFullScreen allowFullScreen></iframe>
+                                    <div class="details">
+										<h2>Step Towards Success</h2>
+										<ul class="check">
+											<li>List Item Number One</li>
+											<li>List Item Number Two</li>
+											<li>List Item Number Three</li>
+											<li>List Item Number Four</li>
+										</ul>
+										<img src="images/certified.png">
+									</div>
+									<div  class="closer"></div>
+								</div>
+							</li>
+
+
+
+							<!--	###############		-	SLIDE 9	-	###############	 -->
+							<li>
+								<img class="thumb" src="images/services/service4.jpg" data-bw="images/services/service4_bw.jpg">
+								<div style="margin-top:16px"></div>
+								<h2>Design Your Layout9</h2>
+								<p>Lorem ipsum dolor sit amet, conseteetur sadipscing elitr,<br> sed diam monumy eirmod...</p>
+								<a class="buttonlight morebutton" href="#">View More</a>
+
+								<!--
+								***********************************************************************************************************
+									-	HERE YOU CAN DEFINE THE EXTRA PAGE WHICH SHOULD BE SHOWN IN CASE THE "BUTTON" HAS BEED PRESSED -
+								***********************************************************************************************************
+								-->
+								<div class="page-more">
+									<img class="big-image" width="498" height="280" src="images/services/large2.jpg">
+									<div class="details_double">
+										<h2>Just An Image & Text</h2>
+										<p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labora et dolore magna.</p>
+                                        <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labora et dolore magna.</p>
+										<p>At vero eou et accusam et justo duo dolores et ea rebum.<br>Stet clita kasd gubergen, no sea takimata sanctus est Lorem ipsum dolor.</p>
+										<a class="buttonlight" href="#">Visit Website</a>
+									</div>
+									<div  class="closer"></div>
+								</div>
+							</li>
+
+
+
+							<!--	###############		-	SLIDE 10	-	###############	 -->
+							<li>
+								<img class="thumb" src="images/services/service5.jpg" data-bw="images/services/service5_bw.jpg">
+								<div style="margin-top:16px"></div>
+								<h2>No Image Just Text10</h2>
+								<p>Lorem ipsum dolor sit amet, conseteetur sadipscing elitr,<br> sed diam monumy eirmod...</p>
+								<a class="buttonlight morebutton" href="#">View More</a>
+
+								<!--
+								***********************************************************************************************************
+									-	HERE YOU CAN DEFINE THE EXTRA PAGE WHICH SHOULD BE SHOWN IN CASE THE "BUTTON" HAS BEED PRESSED -
+								***********************************************************************************************************
+								-->
+								<div class="page-more">
+									<div class="details">
+										<h2>Diverse Layouts</h2>
+										<p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labora et dolore magna.</p>
+										<p>At vero eou et accusam et justo duo dolores et ea rebum.<br>Stet clita kasd gubergen, no sea takimata sanctus est Lorem ipsum dolor.</p>
+									</div>
+									<div class="details">
+										<h2>Step Towards Success</h2>
+										<ul class="check">
+											<li>List Item Number One</li>
+											<li>List Item Number Two</li>
+											<li>List Item Number Three</li>
+											<li>List Item Number Four</li>
+										</ul>
+										<img src="images/certified.png">
+									</div>
+                                    <div class="details_double">
+										<h2>Wide Text Block</h2>
+										<p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labora et dolore magna.</p>
+                                        <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labora et dolore magna.</p>
+										<p>At vero eou et accusam et justo duo dolores et ea rebum.<br>Stet clita kasd gubergen, no sea takimata sanctus est Lorem ipsum dolor.</p>
+										<a class="buttonlight" href="#">Visit Website</a>
+									</div>
+                                    <div class="details">
+										<h2>Short Text Block</h2>
+										<p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labora et dolore magna.</p>
+										<p>At vero eou et accusam et justo duo dolores et ea rebum.<br>Stet clita kasd gubergen, no sea takimata sanctus est Lorem ipsum dolor.</p>
+									</div>
+									<div  class="closer"></div>
+								</div>
+							</li>
+
+
+
+
+						</ul>
+
+						<!--	###############		-	TOOLBAR (LEFT/RIGHT) BUTTONS	-	###############	 -->
+						<div class="toolbar">
+							<div class="left"></div><div class="right"></div>
+						</div>
+					</div>
+
+
+
+
+
+
+        </div><!-- /content -->
+
+        <div id="footer">
+        </div><!-- /footer -->
+    </body>
+</html>

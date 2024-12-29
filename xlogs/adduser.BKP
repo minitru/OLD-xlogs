@@ -1,0 +1,83 @@
+<?php
+/* HANDLE A NEW USER - SHOULD HAVE AN AUTH CODE */
+
+if ($_POST["authcode"]) {	/* IT'S A NEW USER */
+	$passwd = create_hash($passwd);
+	$email = $_POST['email'];
+	/* print "it's a new user"; */
+	$query = "SELECT * FROM users WHERE email = \"$email\"";
+	$result = mysql_query($query) or die('Query failed: ' . mysql_error());
+
+	if (mysql_num_rows($result) != 0) {
+		if ($action == "lostpw") {
+			$id=row['id'];
+			$query = "UPDATE users SET password=\"$passwd\" WHERE id = \"$id\"";
+			logger("$email RESET PASSWORD FOR $id");
+			$result = mysql_query($query) or die('Query failed: ' . mysql_error());
+			dologin($row);
+		}
+		else {
+			/* USER ALREADY EXISTS */
+			logger("$email USER ADD FAILED");
+			# file_put_contents("logfile", "$email USER ADD FAIL\n", FILE_APPEND);
+			print "ERROR: Email already exists, try again";
+			exit;
+		}
+	}
+	/* print "add new user $login, $pw, $email"; */
+	$email = $_POST['email'];
+	if ($action != "lostpw") {
+		logger("$email - ADDING USER");
+		$query = "INSERT INTO users (email, fname, lname, password, lang) 
+		VALUES ('$email', '$fname', '$lname', '$passwd','$lang')";
+		$result = mysql_query($query) or die('Query failed: ' . mysql_error());
+	}
+	/* NOW READ IT BACK IN TO GET THE ID WHICH WILL HAVE BEEN CREATED */
+	$query = "SELECT * FROM users WHERE email = \"$email\"";
+	$result = mysql_query($query) or die('Query failed: ' . mysql_error());
+	$row = mysql_fetch_assoc($result);
+	// SMM THIS IS REALLY BROKEN FOR ADDUSER NOW
+	if ($action == "lostpw") {
+		// HMMM... BREAKS EVERYTHING! $id=row['id'];
+		logger("$email - CHANGING PASSWORD FOR $id");
+		$query = "UPDATE users SET password=\"$passwd\" WHERE id = \"$id\"";
+	}
+	else {
+		/* SEND THE WELCOME MESSAGE */
+        	$mailfile='include/email.' . $lang;
+        	# include $mailfile;
+        	$to = $email;
+
+    		//subject and the html message
+    		//$subject = 'Complete your xlogs registration';
+    		$headers = "From: xlogs <sean@xlo.gs>" . "\r\n" .
+    		$headers .= "Reply-To: sean@xlo.gs\r\n";
+    		$subject = "$fname - Welcome to xlogs!";
+    		$url="http://xlo.gs/view.php";
+    		$message = "Welcome " .  $fname .  "! 
+
+Thanks for registering for xlogs.
+
+The next step is to enter an access key and secret so we can
+watch your instances for you.  We strongly suggest using read
+only keys!  
+
+Just enter the key and secret in the fields at the bottom of
+the viewing page.  Note, for security you can only update keys,
+not view them.
+
+You can login anytime by visiting $url.
+
+If you have any questions or suggestions, please let me know!
+
+Thanks,
+-- 
+Sean MacGuire
+sean@xlo.gs";
+       		$rc = mail($to,$subject,$message,$headers);
+
+		logger("$email USER ADD OK - EMAIL rc = $rc");
+	}
+	dologin($row);
+}
+?>

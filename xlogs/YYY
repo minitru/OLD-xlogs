@@ -1,0 +1,25 @@
+        <div class="wrapper">
+	<div class="done"></div>
+ <div id="myform" class="contact_form">
+<BR><BR>
+	<h2 style="color:grey; font-weight:200;"><?php echo $email;?>, enter your name and choose a password</H2>
+<BR>
+   <form name="myform"  method="post" action="process.php">
+        <input class="span3" type="text" placeholder="First Name" name="fname">
+        <input class="span3" type="text" placeholder="Last Name" name="lname"><BR>
+        <input class="span3" type="password" placeholder="Password" name="passwd">
+        <input class="span3" type="password" placeholder="Repeat Password" name="passwd">
+        <input  type="hidden" name="email" value="<?php echo $email;?>">
+        <input  type="hidden" name="authcode" value="<?php echo $auth;?>">
+<BR><BR>
+       <input type="submit" id="submit" value="Next"  class="medium signin button radius">
+       </form>
+<BR><BR><BR><BR><BR><BR>
+	</div>
+       <hr>
+       <p><span class="pull-right">Already a member? <a href="login.html">Sign up</a></span></p>
+
+        </div>
+        </div>
+        </div>
+

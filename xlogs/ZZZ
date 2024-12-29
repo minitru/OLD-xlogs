@@ -1,0 +1,73 @@
+<ul>
+	<li><div class="xcell">
+<h2> <h2><div class=xl2>xlogs:</div> View Spending Trends</h2>
+<div id="graphdiv2" style="width:260px; height:80px;"></div>
+<script type="text/javascript">
+  g2 = new Dygraph( 
+    document.getElementById("graphdiv2"),
+   "/cdata/<?php echo $id;?>", // path to CSV file
+   {
+      rollPeriod: 7,
+        gridLineColor: 'orange',
+        strokeWidth: 3
+}          // options
+  );
+</script>
+	</div>
+	</li>
+
+	<li><div class="xcell">
+<?php
+if (! $key1) print "<h2><div class=xl2>xlogs:</div>Register your keys</h2>";
+else print "<h2><div class=xl2>xlogs:</div> Update your EC2 keys</h2>";
+?>
+<p><div id='hdr'>Please... Use keys with Read-Only access!</div>
+
+<form action="https://xlo.gs/savekeys.php" method="POST" class="savekeys">
+<div class=field><label>Access Key:</label> <input type="text" name="key1" /></div>
+<div class=field><label>Secret Key:</label> <input type="password" name="sec1" />
+<input type="hidden" name="id" value=<?php echo $id;?> >
+<input id="submit" type="submit" name="submit" class="savekeys" value="Go"></div>
+		<a class="buttonlight morebutton" href="#">Read More</a>
+								
+		<!-- 
+		**************************************************************************
+ 		-	HERE YOU CAN DEFINE THE EXTRA PAGE WHICH SHOULD BE SHOWN IN CASE THE "BUTTON"...
+		***************************************************************************
+		-->
+		<div class="page-more">
+			<img class="big-image" width="350" height="270" src="images/services/service1.jpg">
+			<div class="details">
+				<h2>Diverse Layouts</h2>
+				<p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod....</p>
+				<p>At vero eou et accusam et justo duo dolores et ea rebum.<br>Stet clita kasd ...</p>
+				<a class="buttonlight" href="#">Visit Website</a>
+			</div>
+			<div class="details">
+				<h2>Step Towards Success</h2>
+				<ul class="check">
+					<li>List Item Number One</li>
+					<li>List Item Number Two</li>
+					<li>List Item Number Three</li>
+					<li>List Item Number Four</li>						
+				</ul>
+				<img src="images/certified.png">
+			</div>
+			<div  class="closer"></div>
+		</div>
+	</div>
+	</li>
+
+	<li><div class="xcell">
+          <h2><div class=xl2>xlogs:</div> Get Change Alerts</h2>
+           <p>
+<input type="checkbox" name="notify" value="recent"> As soon as possible<br>
+<input type="checkbox" name="notify" value="daily"> Daily <BR>
+<input type="checkbox" name="notify" value="weekly"> Weekly<BR>
+<input type="checkbox" name="notify" value="monthly"> Monthly
+<input type="hidden" name="id" value=<?php echo $id;?> >
+<input id="submit" type="submit" name="submit" class="notify" value="Go"></div>
+</form>
+	</div>
+	</li>
+</ul>

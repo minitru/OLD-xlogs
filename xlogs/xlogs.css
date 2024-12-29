@@ -1,0 +1,258 @@
+field {
+display:block;
+}
+
+ul#list-nav {
+  position: absolute;
+    top: 0px;
+    left: 170px;
+list-style:none;
+padding: 5px 15px 5px 15px;
+margin:0px;
+}
+
+ul#list-nav li {
+display:inline
+}
+
+ul#list-nav li a {
+text-decoration:none;
+padding:5px 0;
+color:#999;
+width: 70px;
+
+float:left;
+text-align:center;
+border-left:1px solid #fff;
+}
+
+ul#list-nav li a:hover {
+color: orange;
+}
+
+
+*, html{
+    margin: 0px;
+    padding: 0px;
+}
+h1, h2, h3, h4, h5, h6{
+    font-family: 'Yanone Kaffeesatz', sans-serif;
+    font-weight: normal;
+    color: #2a2a2a;
+    margin: 0 0 5px 0;
+    padding: 0px;
+}
+.pagehead{
+    margin: 0px 0 0px 0;
+    padding: 5px 10px 5px 10px;
+    background: #f3f3f3;
+    border-bottom: 1px solid #e8e8e8;
+    font-family: 'Yanone Kaffeesatz', sans-serif;
+}
+.terms{
+    padding: 30px;
+    font: normal 10pt Tahoma;
+}
+.about{
+    padding: 30px;
+    font: normal 14pt Tahoma;
+}
+.description{
+    padding: 10px;
+}
+
+.xtcell {
+border:2px solid grey;
+    color: #2a2a2a;
+    margin: 0px 0 0px 0;
+    padding: 0px 5px 0px 5px;
+    background:#f9f9f9;
+    vertical-align:text-top;
+}
+
+.xcell {
+height:135px;
+border:2px solid grey;
+    color: #2a2a2a;
+    margin: 0px 0 0px 0;
+    padding: 0px 5px 0px 5px;
+    background:#f9f9f9;
+    vertical-align:text-top;
+}
+.x2cell {
+    color: #333;
+    margin: 0px 0 0px 0;
+    background: #88;
+    border 3px solid #000;
+    vertical-align:text-top;
+}
+#xtab {
+    color: #2a2a2a;
+    margin: 0px 0px 0px 0px;
+    padding: 5px 10px 5px 10px;
+    background: #f3f3f3;
+    border 1px solid #000;
+    vertical-align:text-top;
+}
+.cell {
+    color: #2a2a2a;
+    margin: 0px 0 0px 0;
+    padding: 5px 10px 5px 10px;
+    background: #f3f3f3;
+    border 1px solid #000;
+    width: 30%;
+    vertical-align:text-top;
+}
+.xl {
+    color:orange; 
+    font: normal 20pt Tahoma;
+    display: inline;
+}
+.xl2 {
+    display:inline;
+    color:orange; 
+    font: normal 16pt Tahoma;
+}
+
+.orange {
+    float:left;
+    display: inline;
+    color:orange; 
+}
+
+#xl3 {
+    color:orange; 
+    font: normal 30pt Tahoma;
+    display: inline;
+    text-align:middle;
+}
+
+p{
+    margin: 0 0 10px 0;
+}
+body{
+    background: #f8f8f8;
+    color: #454545;
+    font: normal 10pt Tahoma;
+    margin: 0;
+    padding: 0;
+    border-top: 5px solid #2a2a2a;
+}
+a:focus{
+    border: none;
+    outline: none;
+}
+a{
+    color: #1e7dc6;
+    text-decoration: none;
+}
+a:hover{
+    color: #c67d1e;
+}
+#content{
+    width: 980px;
+    margin: 0 auto;
+    min-height: 500px;
+    background: #FFF;
+    padding: 0px 0px 10px 0px;
+    border: 1px solid #e8e8e8;
+    line-height: 1.5;
+}
+#footer{
+    width: 980px;
+    margin: 0 auto;
+    text-align: center;
+    padding: 10px 0 20px 0;
+}
+.clear{
+    clear:both;
+}
+
+#demo-header{
+    width: 980px;
+    margin: 0 auto;
+    position: relative;
+}
+#logo {
+    position: absolute;
+    text-align:middle;
+    top: 0px;
+    left: 0px;
+    display: inline;
+    color:orange;
+    font: normal 24pt Tahoma;
+a:link {text-decoration:none;}
+a:visited {text-decoration:none;}
+a:hover {text-decoration:underline;}
+a:active {text-decoration:underline;}
+}
+
+#login-link{
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    width: 100px;
+    display: block;
+    text-align: center;
+    background: orange;
+    padding: 5px 15px 5px 15px;
+    color: #FFF;
+}
+
+#bobo {
+a:link {text-decoration:none; color: white;}
+a:visited {text-decoration:none; color: white;}
+a:hover {text-decoration:underline; color: white;}
+a:active {text-decoration:underline; color: white;}
+}
+
+filter{
+    text-align: left;
+    color: orange;
+    line-height: 1.8;
+}
+label1{
+    line-height: 1.8;
+}
+label2{
+    line-height: 1.8;
+    font-size: 16pt;
+}
+label{
+    line-height: 1.8;
+}
+ul {
+    position: relative;
+    left: 20px;
+	/* color: blue;*/
+}
+
+#login{
+    font: bold 9pt Tahoma;
+    display:inline;
+    color:white;
+}
+
+#signup{
+    line-height: 1.8;
+    font-size: 14pt;
+}
+
+#sum1{
+}
+
+#cost{
+    color: grey;
+    font-size: 16pt;
+}
+
+#warn{
+    color: red;
+    font-size: 20pt;
+}
+
+#spendttl{
+    color: orange;
+    font-size: 12pt;
+}
+

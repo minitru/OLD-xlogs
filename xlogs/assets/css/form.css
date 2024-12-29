@@ -1,0 +1,64 @@
+#wrapper {
+    height:300px;
+}
+
+.clear {clear:both}
+ 
+.block {
+    width:400px;
+    margin:0 auto;
+    text-align:left;
+}
+.element * {
+    padding:5px;
+    margin:2px;
+    font-family:arial;
+    font-size:12px;
+}
+.element label {
+    float:left;
+    width:75px;
+    font-weight:700
+}
+.element input.text {
+    float:left;
+    width:270px;
+    padding-left:20px;
+}
+.element .textarea {
+    height:120px;
+    width:270px;
+    padding-left:20px;
+}
+.span3 .highlight {
+    border:7px solid #F00;
+    /* background:url(iconCaution.gif) no-repeat 100px */
+}
+.span6 .highlight {
+    border:2px solid #9F1319;
+    /* background:url(iconCaution.gif) no-repeat 100px */
+}
+.element .highlight {
+    border:8px solid #9F1319;
+    background:url(iconCaution.gif) no-repeat 2px
+}
+.element #submit {
+    float:right;
+    margin-right:10px;
+}
+.loading {
+    float:right;
+    background:url(ajax-loader.gif) no-repeat 1px;
+    height:28px;
+    width:28px;
+    display:none;
+}
+.done {
+    background:url(iconIdea.gif) no-repeat 2px;
+    padding-left:20px;
+    font-family:arial;
+    font-size:12px;
+    width:70%;
+    margin:20px auto;
+    display:none
+}

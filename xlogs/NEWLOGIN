@@ -1,0 +1,34 @@
+<php
+
+
+
+
+/* NEW USERS DROP THRU TO HERE - AND HOPEFULLY WILL WORK */
+if ($login) {
+	$query = "SELECT * FROM users WHERE email = \"$email\" AND password = \"$pw\"";
+	$result = mysql_query($query) or die('Query failed: ' . mysql_error());
+	$row = mysql_fetch_assoc($result);
+	$id = $row['id'];
+	$lang = $row['lang'];
+	# print "It's a login [$id]"; 
+
+	if (mysql_num_rows($result) != 0) {
+		/* print "login OK"; */
+		$loginerror = "";
+		/* USER AND PASSWORD OK */
+		$_SESSION['id']=$id;
+		$_SESSION['email']=$email;
+		$_SESSION['lang']=$lang;
+		# UNTIL THERE ARE MULTIPLE DATA ENTRY FORMS FOR
+		# SETTINGS USE THIS HERE.
+		if ($email) $start='portfolio';	# ENTER MORE DATA
+		else $start='contact';
+
+		include 'view.php';
+	}
+	else {
+		/* print "Invalid login"; */
+		$loginerror = $pr_invalidlogin;
+		include 'index.php';
+	}
+}

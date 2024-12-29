@@ -1,0 +1,42 @@
+
+<table cellpadding="10" cellspacing="10" border="1" class="display">
+<TR><TD id=c1 class=cell>
+          <h2><div class=xl2>xlogs:</div> View Spending Trends</h2>
+<div id="graphdiv2" style="width:260px; height:80px;"></div>
+<script type="text/javascript">
+  g2 = new Dygraph(
+    document.getElementById("graphdiv2"),
+   "/cdata/<?php echo $id;?>", // path to CSV file
+   {
+      rollPeriod: 7,
+	gridLineColor: 'orange',
+	strokeWidth: 3
+}          // options
+  );
+</script>
+</TD>
+<TD id=c2 class="cell">
+<?php
+if (! $key1) print "<h2><div class=xl2>xlogs:</div>Register your keys</h2>";
+else print "<h2><div class=xl2>xlogs:</div> Update your EC2 keys</h2>";
+?>
+<p><div id='hdr'>Please... Use keys with Read-Only access!</div>
+
+<form action="https://xlo.gs/savekeys.php" method="POST" class="savekeys">
+<div class=field><label>Access Key:</label> <input type="text" name="key1" /></div>
+<div class=field><label>Secret Key:</label> <input type="password" name="sec1" />
+<input type="hidden" name="id" value=<?php echo $id;?> >
+<input id="submit" type="submit" name="submit" class="savekeys" value="Go"></div>
+</TD>
+<TD id=c3 class="cell">
+          <h2><div class=xl2>xlogs:</div> Get Change Alerts</h2>
+           <p>
+<input type="checkbox" name="notify" value="recent"> As soon as possible<br>
+<input type="checkbox" name="notify" value="daily"> Daily <BR>
+<input type="checkbox" name="notify" value="weekly"> Weekly<BR>
+<input type="checkbox" name="notify" value="monthly"> Monthly
+<input type="hidden" name="id" value=<?php echo $id;?> >
+<input id="submit" type="submit" name="submit" class="notify" value="Go"></div>
+</form>
+</TD></TR></table>
+

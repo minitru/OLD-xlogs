@@ -1,0 +1,14 @@
+login
+	Using userbase plugin - haven't integrated or extended it
+
+	https://xlo.gs/userbase/index_js_and_noscript/
+
+	mysql
+
+json.php
+
+	Print out logfiles in json format for xlogs
+
+dyn.php
+
+	Dynamically poll amazon, create the logfile, and return json

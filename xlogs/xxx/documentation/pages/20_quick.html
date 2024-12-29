@@ -1,0 +1,75 @@
+<link href="../css/documentation.css" rel="stylesheet" type="text/css" />
+
+
+<p><span class="value"><font size="1">00</font></span><strong> What files do I need to upload to my server?</strong></p>
+<p>Please upload the <strong><em>services-plugin</em> folder</strong> to your server. In this folder you will find the following subfolders containing all of the items content:</p>
+<ul>
+  <li>js</li>
+  <li>css</li>
+  <li>assets</li>
+</ul>
+<p>You could use your own <i>jQuery</i> but we recommend loading it directly from the Google ressources (see later in this documentation<span class="value"></span>).</p>
+<p>&nbsp;</p>
+<p>
+  <span class="value"><font size="1">01</font></span><strong> Implement the jQuery</strong>:</p>
+<p>Add the following lines to your HTML <strong>&lt;HEAD&gt;</strong>:</p>
+<p class="xmlexample">&lt;script type=&quot;text/javascript&quot; src=&quot;http://ajax.googleapis.com/ajax/libs/jquery/1.7/<strong>jquery.js</strong>&quot;&gt;&lt;/script&gt;<br />
+</p>
+<p>&nbsp;</p>
+<p><span class="value"><font size="1">02</font></span> <strong>Add services js  and  css</strong> files to your HTML page:</p>
+<p>Also in the <strong>&lt;HEAD&gt;</strong> section:</p>
+<p class="xmlexample">&lt;!-- ANIMATE AND EASING LIBRARIES --&gt;<br />
+&lt;script type=&quot;text/javascript&quot; src=&quot;services-plugin/js/jquery.<strong>easing</strong>.1.3.js&quot;&gt;&lt;/script&gt; <br />
+&lt;script type=&quot;text/javascript&quot; src=&quot;services-plugin/js/jquery.<strong>cssAnimate</strong>.mini.js&quot;&gt;&lt;/script&gt; <br />
+<br />
+&lt;!-- TOUCH AND MOUSE WHEEL SETTINGS --&gt;<br />
+&lt;script type=&quot;text/javascript&quot; src=&quot;services-plugin/js/jquery.<strong>touchwipe</strong>.min.js&quot;&gt;&lt;/script&gt; <br />
+&lt;script type=&quot;text/javascript&quot; src=&quot;services-plugin/js/jquery.<strong>mousewheel</strong>.min.js&quot;&gt;&lt;/script&gt; <br />
+<br />
+&lt;!-- jQuery SERVICES Slider  --&gt;<br />
+&lt;script type=&quot;text/javascript&quot; src=&quot;services-plugin/js/jquery.themepunch.<strong>services</strong>.js&quot;&gt;&lt;/script&gt; <br />
+&lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;services-plugin/css/<strong>settings</strong>.css&quot; media=&quot;screen&quot; /&gt;</p>
+<p>This contains the JS and CSS for the plugin itself (<strong>jquery.themepunch.services.js,settings.css)</strong> and some helping modules (<strong>jquery.easing.1.3.js,jquery.cssAnimate.mini.js,jquery.mousewheel.js,jquery.touchwipe.min.js</strong>).</p>
+<p>&nbsp;</p>
+<p><span class="value"><font size="1">03</font></span> <strong>Create  the surroun</strong><strong>ding DIV for your item </strong>:</p>
+<p>Put it in the HTML:</p>
+<p class="xmlexample">&lt;<strong>div</strong> id=&quot;services-example-1&quot; class=&quot;<strong>theme1</strong>&quot;&gt;...&lt;/<strong>div</strong>&gt;<br>
+</p>
+<p>&nbsp;</p>
+<p><span class="value"><font size="1">04</font></span> <strong>Put an unordered list inside to hold the different slides as list elements:</strong></p>
+<pre class="xmlexample"><strong>&lt;ul&gt;<br />				</strong>		&lt;!--	###############		-	SLIDE 1	-	###############	 --&gt;<br />	<strong>&lt;li&gt;</strong><br />		&lt;img class=&quot;thumb&quot; src=&quot;images/services/service1.jpg&quot; data-bw=&quot;images/services/service1_bw.jpg&quot;&gt;	<br />		&lt;div style=&quot;margin-top:16px&quot;&gt;&lt;/div&gt;<br />		&lt;h2&gt;Diverse Layouts&lt;/h2&gt;<br />		&lt;p&gt;Lorem ipsum dolor sit amet...&lt;/p&gt;	<br />		&lt;a class=&quot;buttonlight morebutton&quot; href=&quot;#&quot;&gt;Read More&lt;/a&gt;<br />								<br />		&lt;!-- <br />		**************************************************************************
+ 		-	HERE YOU CAN DEFINE THE EXTRA PAGE WHICH SHOULD BE SHOWN IN CASE THE &quot;BUTTON&quot;...<br />		***************************************************************************
+		--&gt;<br />		&lt;div class=&quot;page-more&quot;&gt;<br />			&lt;img class=&quot;big-image&quot; width=&quot;350&quot; height=&quot;270&quot; src=&quot;images/services/service1.jpg&quot;&gt;<br />			&lt;div class=&quot;details&quot;&gt;<br />				&lt;h2&gt;Diverse Layouts&lt;/h2&gt;<br />				&lt;p&gt;Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod....&lt;/p&gt;<br />				&lt;p&gt;At vero eou et accusam et justo duo dolores et ea rebum.&lt;br&gt;Stet clita kasd ...&lt;/p&gt;<br />				&lt;a class=&quot;buttonlight&quot; href=&quot;#&quot;&gt;Visit Website&lt;/a&gt;<br />			&lt;/div&gt;<br />			&lt;div class=&quot;details&quot;&gt;<br />				&lt;h2&gt;Step Towards Success&lt;/h2&gt;<br />				&lt;ul class=&quot;check&quot;&gt;<br />					&lt;li&gt;List Item Number One&lt;/li&gt;<br />					&lt;li&gt;List Item Number Two&lt;/li&gt;<br />					&lt;li&gt;List Item Number Three&lt;/li&gt;<br />					&lt;li&gt;List Item Number Four&lt;/li&gt;						<br />				&lt;/ul&gt;<br />				&lt;img src=&quot;images/certified.png&quot;&gt;<br />			&lt;/div&gt;<br />			&lt;div  class=&quot;closer&quot;&gt;&lt;/div&gt;<br />		&lt;/div&gt;<br />	<strong>&lt;/li&gt;
+  ....<br />&lt;/ul&gt;</strong></pre>
+<p>&nbsp;</p>
+<p><span class="value"><font size="1">05</font></span> <strong>Call the jQuery Plugin to build the  Slider:</strong></p>
+<p>Put this code underneath the above created DIV:</p>
+<pre class="xmlexample">			&lt;!--<br />			##############################<br />			 - ACTIVATE THE SERVICES HERE -<br />			##############################<br />			--&gt;<br />			&lt;script type=&quot;text/javascript&quot;&gt;<br />				<br />				$(document).ready(function() {<br />					$.noConflict();					 									<br />					<br />				jQuery('#<strong>services-example-1</strong>').services(<br />				{										<br />							width:920,<br />							height:295,							<br />							slideAmount:5,<br />							slideSpacing:30,							<br />							touchenabled:&quot;on&quot;,<br />							mouseWheel:&quot;on&quot;,<br />							transition:1,
+							slideshow:3000,
+							callBack:function() {}<br />				});<br />			&lt;/script&gt;</pre>
+<p>&nbsp;</p>
+<p><font size="-1"><span class="value"><font size="1">06</font></span></font> <strong> A complete Showbiz Site:</strong></p>
+<pre class="xmlexample"><strong>
+</strong>&lt;html&gt;
+&lt;head&gt;
+...
+
+&lt;script type=&quot;text/javascript&quot; src=&quot;http://ajax.googleapis.com/ajax/libs/jquery/1.7/<strong>jquery.js</strong>&quot;&gt;&lt;/script&gt;
+
+&lt;!-- ANIMATE AND EASING LIBRARIES --&gt;<br />&lt;script type=&quot;text/javascript&quot; src=&quot;services-plugin/js/jquery.<strong>easing</strong>.1.3.js&quot;&gt;&lt;/script&gt; <br />&lt;script type=&quot;text/javascript&quot; src=&quot;services-plugin/js/jquery.<strong>cssAnimate</strong>.mini.js&quot;&gt;&lt;/script&gt; <br />
+&lt;!-- TOUCH AND MOUSE WHEEL SETTINGS --&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;services-plugin/js/jquery.<strong>touchwipe</strong>.min.js&quot;&gt;&lt;/script&gt; 
+&lt;script type=&quot;text/javascript&quot; src=&quot;services-plugin/js/jquery.<strong>mousewheel</strong>.min.js&quot;&gt;&lt;/script&gt; <br />
+&lt;!-- jQuery SERVICES Slider  --&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;services-plugin/js/jquery.themepunch.<strong>services</strong>.js&quot;&gt;&lt;/script&gt; 
+&lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;services-plugin/css/<strong>settings</strong>.css&quot; media=&quot;screen&quot; /&gt;&lt;/head&gt;
+
+&lt;body&gt;
+...
+<strong>	&lt;div id=&quot;banner&quot;&gt;<br />		&lt;ul&gt;</strong>								<br />					&lt;!--	###############		-	SLIDE 1	-	###############	 --&gt;<br />	<strong>&lt;li&gt;</strong><br />		&lt;img class=&quot;thumb&quot; src=&quot;images/services/service1.jpg&quot; data-bw=&quot;images/services/service1_bw.jpg&quot;&gt;	<br />		&lt;div style=&quot;margin-top:16px&quot;&gt;&lt;/div&gt;<br />		&lt;h2&gt;Diverse Layouts&lt;/h2&gt;<br />		&lt;p&gt;Lorem ipsum dolor sit amet...&lt;/p&gt;	<br />		&lt;a class=&quot;buttonlight morebutton&quot; href=&quot;#&quot;&gt;Read More&lt;/a&gt;<br />								<br />		&lt;!-- <br />		**************************************************************************
+ 		-	HERE YOU CAN DEFINE THE EXTRA PAGE WHICH SHOULD BE SHOWN IN CASE THE &quot;BUTTON&quot;...<br />		***************************************************************************
+		--&gt;<br />		&lt;div class=&quot;page-more&quot;&gt;<br />			&lt;img class=&quot;big-image&quot; width=&quot;350&quot; height=&quot;270&quot; src=&quot;images/services/service1.jpg&quot;&gt;<br />			&lt;div class=&quot;details&quot;&gt;<br />				&lt;h2&gt;Diverse Layouts&lt;/h2&gt;<br />				&lt;p&gt;Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod....&lt;/p&gt;<br />				&lt;p&gt;At vero eou et accusam et justo duo dolores et ea rebum.&lt;br&gt;Stet clita kasd ...&lt;/p&gt;<br />				&lt;a class=&quot;buttonlight&quot; href=&quot;#&quot;&gt;Visit Website&lt;/a&gt;<br />			&lt;/div&gt;<br />			&lt;div class=&quot;details&quot;&gt;<br />				&lt;h2&gt;Step Towards Success&lt;/h2&gt;<br />				&lt;ul class=&quot;check&quot;&gt;<br />					&lt;li&gt;List Item Number One&lt;/li&gt;<br />					&lt;li&gt;List Item Number Two&lt;/li&gt;<br />					&lt;li&gt;List Item Number Three&lt;/li&gt;<br />					&lt;li&gt;List Item Number Four&lt;/li&gt;						<br />				&lt;/ul&gt;<br />				&lt;img src=&quot;images/certified.png&quot;&gt;<br />			&lt;/div&gt;<br />			&lt;div  class=&quot;closer&quot;&gt;&lt;/div&gt;<br />		&lt;/div&gt;<br />	<strong>&lt;/li&gt;</strong>
+  ....<br />		<strong>&lt;/ul&gt;</strong><br /><strong>&lt;/div&gt;	</strong>		<br />&lt;!--<br />			##############################<br />			 - ACTIVATE THE SERVICES HERE -<br />			##############################<br />			--&gt;<br />			&lt;script type=&quot;text/javascript&quot;&gt;<br />				<br />				$(document).ready(function() {<br />					$.noConflict();					 									<br />					<br />				jQuery('#<strong>services-example-1</strong>').services(<br />				{										<br />							width:920,<br />							height:295,							<br />							slideAmount:5,<br />							slideSpacing:30,							<br />							touchenabled:&quot;on&quot;,<br />							mouseWheel:&quot;on&quot;,<br />							transition:1<br />				});<br />			&lt;/script&gt;<br />
+  ... 
+  &lt;/body&gt;
+&lt;/html&gt;</pre>

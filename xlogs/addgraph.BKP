@@ -1,0 +1,45 @@
+<?php
+
+// addgraph("use1_all", 600, 300);
+
+function addgraph($name, $width, $height)
+{
+global $id;
+
+// SMM THIS IS GROSS - GRABBING THE DATA FILE SO MANY TIMES
+// I HAVE TO FIGURE OUT A WAY TO DELAY CREATING THE GRAPHS
+// UNTIL THE DATA IS READY...
+echo "<script type=\"text/javascript\" src=\"cdata/$id.js\"></script>";
+
+// MOVE THE DIV OUTSIDE THE GRAPH PART
+print "<div id=\"$name\" style=\"width:$width; height:$height;\"></div>";
+
+
+print "<div id=\"$name\" style=\"width:$width; height:$height;\"></div>
+    <script type=\"text/javascript\">
+
+      g14 = new Dygraph(
+            document.getElementById(\"$name\"),
+            $name, {
+
+	labels: [ 'Date', 'instances', 'cost'],
+		'cost': {
+			axis: {
+			}
+		},
+            axes: {
+              y2: {
+                // set axis-related properties here
+	      fillGraph: true,
+              }
+            },
+            y2AxisLabelWidth: 80,
+              gridLineColor: '#00FF00',
+              highlightCircleSize: 5,
+		labelsSeparateLines: true,
+              strokeWidth: 3
+            }
+          );
+    </script>
+";
+}

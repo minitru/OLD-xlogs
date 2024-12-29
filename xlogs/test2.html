@@ -1,0 +1,22 @@
+<html>
+<head>
+<script type="text/javascript"
+  src="dygraph-combined.js"></script>
+</head>
+<body>
+<div id="graphdiv4"
+  style="width:480px; height:320px;"></div>
+<script type="text/javascript">
+  g4 = new Dygraph(
+    document.getElementById("graphdiv4"),
+    "twonormals.csv",
+    {
+      rollPeriod: 7,
+      showRoller: true,
+      errorBars: true,
+      valueRange: [50,125]
+    }
+  );
+</script>
+</body>
+</html>

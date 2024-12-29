@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>xlogs - Sign up</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+        <!-- LOAD CSS ASSETS -->
+
+
+        <link rel="stylesheet" type="text/css" href="assets/css/style.css" />
+        <link href="assets/css/font-awesome.css" rel="stylesheet">
+        <link href="assets/css/neet.css" rel="stylesheet">
+        <link href="assets/css/bootstrap.css" rel="stylesheet">
+        <link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
+        <link href="assets/css/form.css" rel="stylesheet">
+        <link href="xlogs.css" rel="stylesheet">
+
+
+        <!-- LOAD GOOGLE WEBFONTS -->
+
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,300,400,600,700' rel='stylesheet' type='text/css'>
+
+       <script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
+       <script type="text/javascript" src="js/form.js"></script>
+
+
+        <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+        <!--[if lt IE 9]>
+       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+       <![endif]-->
+
+
+    <!-- Le fav and touch icons -->
+    <link rel="shortcut icon" href="../assets/ico/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">
+  </head>
+
+  <body>
+
+
+         <div class="typo_top">
+
+         <div class="signin_sec">
+
+<BR><BR>
+          <h1><IMG SRC="xlogs.png" HEIGHT=80><div id=xl3>xlogs</div><BR></h1>
+
+         </div>
+<CENTER>
+
+
+
+
+        <div class="wrapper">
+	<div class="done"></div>
+ <div id="myform" class="contact_form">
+<BR><BR>
+	<h2 style="color:grey; font-weight:200;"><div id="hdr">
+<?php
+if ($action == "lostpw") echo "lost password? - enter your email below";
+else echo " welcome - let's confirm your email";
+?>
+</div></H2>
+<BR>
+   <form name="signup"  class="control-group" method="post" action="XXprocess.php">
+        <input class="span3" type="text" placeholder="Email" name="email">
+<?php
+        if ($action == "lostpw") echo "<input type='hidden' name='action' value='lostpw'>";
+?>
+<BR><BR>
+       <input type="submit" id="submit" value="Next"  class="medium signin button radius">
+       </form>
+<BR><BR><BR><BR><BR><BR><BR><BR>
+	</div>
+       <hr>
+	<p><span class="pull-right">Lost password? <a href="signup.php?action=lostpw">Click here</A><BR>Already a member? <a href="signin.php">Sign in</a></span></p>
+
+</CENTER>
+        </div>
+        </div>
+        </div>
+
+
+
+    <div class="footer_sec">
+
+
+      <footer>
+
+      <div class="container">
+        <p>&copy; 2012 xlogs<span class="pull-right">Go back <a href="/">Home &raquo;</a></span> </p>
+
+
+       </div>
+      </footer>
+
+
+
+          </div>
+ <script> (function(d, s, id) { bubble_bubble_autoshow_timer = 0; var js, hbjs = d.getElementsByTagName(s)[0]; if (d.getElementById(id)) return; js = d.createElement(s); js.id = id; js.src = window.location.protocol + "//www.heybubble.com/vchat/frame/100292B642D48A83B6641B8453AD9BBD" + "?current_url=" + encodeURIComponent(window.location) + "&referer=" + encodeURIComponent(document.referrer); hbjs.parentNode.insertBefore(js, hbjs); }(document, 'script', 'heybubble-jssdk')); </script> 
+  </body>
+</html>
